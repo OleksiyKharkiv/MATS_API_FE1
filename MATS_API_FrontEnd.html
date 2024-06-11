@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users & Subscriptions</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('file:///C:/Users/OleksiyKhudoshyn/AWork/DnD/DnDBackground.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4caf51;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            background-color: rgba(0, 0, 0, 0.5); /* Непрозрачный фон */
+            color: white; /* Белый текст */
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>DnD Frontend</h1>
+    <!-- <button id="getAllCharactersBtn">Get All Game Characters</button>
+    <button id="createCharacterBtn">Create Game Character</button>
+    <button id="updateCharacterBtn">Update Game Character</button>
+    <button id="deleteCharacterBtn">Delete Game Character</button> -->
+    <button id="findCharacterByIdBtn">Find Character by ID</button>
+    <div id="output"></div>
+</div>
+
+<script>
+    
+    document.getElementById("findUserIdBtn").addEventListener("click", findUserById);
+
+    async function findUserById() {
+    const userId = prompt('Enter the User ID:');
+        if (!userId) return; // Exit if user cancels
+        try {
+            const response = await fetch(`http://localhost:8080/api/users/${userId}`);
+            const data = await response.json();
+            document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('file:///C:/MATS/MATS_API_1/MATS_background_API_1.png');
+            background-image: url('MATS_background_API_1.png'); /* Файл должен быть в репозитории */
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -48,24 +48,19 @@
 </head>
 <body>
 <div class="container">
-    <h1>Find Users & Subscription</h1>
-    <!-- <button id="getAllCharactersBtn">Get All Game Characters</button>
-    <button id="createCharacterBtn">Create Game Character</button>
-    <button id="updateCharacterBtn">Update Game Character</button>
-    <button id="deleteCharacterBtn">Delete Game Character</button> -->
-    <button id="findCharacterByIdBtn">Find User by ID</button>
+    <h1>Find Users & Subscriptions</h1>
+    <button id="findUserByIdBtn">Find User by ID</button>
     <div id="output"></div>
 </div>
 
 <script>
-    
-    document.getElementById("findUserIdBtn").addEventListener("click", findUserById);
+    document.getElementById("findUserByIdBtn").addEventListener("click", findUserById);
 
     async function findUserById() {
-    const userId = prompt('Enter the User ID:');
+        const userId = prompt('Enter the User ID:');
         if (!userId) return; // Exit if user cancels
         try {
-            const response = await fetch(`http://localhost:8080/api/users/${userId}`);
+            const response = await fetch(`http://ec2-100-27-11-65.compute-1.amazonaws.com/api/user/${userId}`); // Укажите правильный URL
             const data = await response.json();
             document.getElementById("output").innerText = JSON.stringify(data, null, 2);
         } catch (error) {

@@ -43,6 +43,7 @@
             padding: 10px;
             margin-top: 20px;
             border-radius: 5px;
+            white-space: pre-wrap; /* Форматирование вывода JSON */
         }
     </style>
 </head>
@@ -59,12 +60,24 @@
     async function findUserById() {
         const userId = prompt('Enter the User ID:');
         if (!userId) return; // Exit if user cancels
+
         try {
-            const response = await fetch(`http://ec2-100-27-11-65.compute-1.amazonaws.com/api/user/${userId}`); // Укажите правильный URL
+            const response = await fetch(`http://ec2-100-27-11-65.compute-1.amazonaws.com/api/user/${userId}`);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
             const data = await response.json();
-            document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+            
+            if (Object.keys(data).length === 0 || data === null) {
+                document.getElementById("output").innerText = 'Request failed: User not found or empty response.';
+            } else {
+                document.getElementById("output").innerText = `Request successful:\n${JSON.stringify(data, null, 2)}`;
+            }
         } catch (error) {
             console.error('Error:', error);
+            document.getElementById("output").innerText = 'Request failed: Unable to fetch data.';
         }
     }
 </script>
